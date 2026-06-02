@@ -17,25 +17,16 @@ const common_1 = require("@nestjs/common");
 const consultas_service_1 = require("./consultas.service");
 const create_consulta_dto_1 = require("./dto/create-consulta.dto");
 const update_consulta_dto_1 = require("./dto/update-consulta.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let ConsultasController = class ConsultasController {
     constructor(consultasService) {
         this.consultasService = consultasService;
     }
-    findAll() {
-        return this.consultasService.findAll();
-    }
-    findOne(id) {
-        return this.consultasService.findOne(id);
-    }
-    create(dto) {
-        return this.consultasService.create(dto);
-    }
-    update(id, dto) {
-        return this.consultasService.update(id, dto);
-    }
-    remove(id) {
-        return this.consultasService.remove(id);
-    }
+    findAll() { return this.consultasService.findAll(); }
+    findOne(id) { return this.consultasService.findOne(id); }
+    create(dto) { return this.consultasService.create(dto); }
+    update(id, dto) { return this.consultasService.update(id, dto); }
+    remove(id) { return this.consultasService.remove(id); }
 };
 exports.ConsultasController = ConsultasController;
 __decorate([
@@ -74,6 +65,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ConsultasController.prototype, "remove", null);
 exports.ConsultasController = ConsultasController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('consultas'),
     __metadata("design:paramtypes", [consultas_service_1.ConsultasService])
 ], ConsultasController);

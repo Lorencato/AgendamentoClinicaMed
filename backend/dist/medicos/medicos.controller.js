@@ -17,25 +17,16 @@ const common_1 = require("@nestjs/common");
 const medicos_service_1 = require("./medicos.service");
 const create_medico_dto_1 = require("./dto/create-medico.dto");
 const update_medico_dto_1 = require("./dto/update-medico.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let MedicosController = class MedicosController {
     constructor(medicosService) {
         this.medicosService = medicosService;
     }
-    findAll() {
-        return this.medicosService.findAll();
-    }
-    findOne(id) {
-        return this.medicosService.findOne(id);
-    }
-    create(dto) {
-        return this.medicosService.create(dto);
-    }
-    update(id, dto) {
-        return this.medicosService.update(id, dto);
-    }
-    remove(id) {
-        return this.medicosService.remove(id);
-    }
+    findAll() { return this.medicosService.findAll(); }
+    findOne(id) { return this.medicosService.findOne(id); }
+    create(dto) { return this.medicosService.create(dto); }
+    update(id, dto) { return this.medicosService.update(id, dto); }
+    remove(id) { return this.medicosService.remove(id); }
 };
 exports.MedicosController = MedicosController;
 __decorate([
@@ -74,6 +65,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MedicosController.prototype, "remove", null);
 exports.MedicosController = MedicosController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('medicos'),
     __metadata("design:paramtypes", [medicos_service_1.MedicosService])
 ], MedicosController);

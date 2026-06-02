@@ -5,6 +5,34 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+// Injeta o token automaticamente em todas as requisições
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+// Redireciona para login se token expirar
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('usuario')
+      window.location.href = '/login'
+    }
+    return Promise.reject(err)
+  }
+)
+
+export const authApi = {
+  login: (data) => api.post('/auth/login', data),
+  register: (data) => api.post('/auth/register', data),
+  me: () => api.get('/auth/me'),
+  getUsuarios: () => api.get('/auth/usuarios'),
+  deleteUsuario: (id) => api.delete(`/auth/usuarios/${id}`),
+}
+
 export const pacientesApi = {
   getAll: () => api.get('/pacientes'),
   getOne: (id) => api.get(`/pacientes/${id}`),

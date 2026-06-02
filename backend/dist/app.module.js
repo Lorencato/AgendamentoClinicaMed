@@ -13,9 +13,11 @@ const typeorm_1 = require("@nestjs/typeorm");
 const pacientes_module_1 = require("./pacientes/pacientes.module");
 const medicos_module_1 = require("./medicos/medicos.module");
 const consultas_module_1 = require("./consultas/consultas.module");
+const auth_module_1 = require("./auth/auth.module");
 const paciente_entity_1 = require("./pacientes/paciente.entity");
 const medico_entity_1 = require("./medicos/medico.entity");
 const consulta_entity_1 = require("./consultas/consulta.entity");
+const user_entity_1 = require("./auth/user.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,10 +35,11 @@ exports.AppModule = AppModule = __decorate([
                     username: config.get('DB_USERNAME', 'root'),
                     password: config.get('DB_PASSWORD', ''),
                     database: config.get('DB_DATABASE', 'clinica_db'),
-                    entities: [paciente_entity_1.Paciente, medico_entity_1.Medico, consulta_entity_1.Consulta],
+                    entities: [paciente_entity_1.Paciente, medico_entity_1.Medico, consulta_entity_1.Consulta, user_entity_1.User],
                     synchronize: true,
                 }),
             }),
+            auth_module_1.AuthModule,
             pacientes_module_1.PacientesModule,
             medicos_module_1.MedicosModule,
             consultas_module_1.ConsultasModule,
